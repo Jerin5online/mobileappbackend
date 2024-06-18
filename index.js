@@ -8,7 +8,7 @@ const cors = require("cors");
 
 // //import connection.js
 
-// require('./DB/connections')
+ require('./Database/connection')
 
 const mobileserver = express();
 

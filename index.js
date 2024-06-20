@@ -4,29 +4,44 @@ const express = require("express");
 
 const cors = require("cors");
 
+const app = express();
+
+const session = require('express-session');
+
+app.use(session({
+    resave: false,
+    saveUninitialized: true,
+    secret: process.env.SESSION_SECRET 
+}));
+
+
+app.set('view engine', 'ejs');
+
+const userRoutes = require('./Routers/userRoute');
+
+app.use('/',userRoutes);
 // const router = require('./Routers/router')
 
 // //import connection.js
 
  require('./Database/connection')
 
-const mobileserver = express();
 
-mobileserver.use(cors());
+app.use(cors());
 
-mobileserver.use(express.json());
+app.use(express.json());
 
-// mobileserver.use(router);
+// app.use(router);
 
-// mobileserver.use('/uploads',express.static('./uploads'))
+// app.use('/uploads',express.static('./uploads'))
 
 const PORT = 4000 || process.env;
 
-mobileserver.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`SERVER RUNNING SUCCESSFULLY AT PORT NUMBER ${PORT}`);
 });
 
-mobileserver.get("/", (req, res) => {
+app.get("/", (req, res) => {
   res.send(
     `<h1 style= color:green>project fair  server runing succesfully and ready to accepts requests for client</h1>`
   );
